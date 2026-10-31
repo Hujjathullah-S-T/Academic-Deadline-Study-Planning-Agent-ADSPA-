@@ -1,0 +1,53 @@
+{
+  "project": "ADSPA Academic Deadline and Study Planning Agent",
+  "entry_point": "streamlit/streamlit_app.py",
+  "cli_entry_point": "src/agent.py",
+  "python": "3.10+",
+  "runtime_dependencies": [
+    "streamlit",
+    "pydantic",
+    "APScheduler",
+    "SQLAlchemy",
+    "PyMuPDF",
+    "python-docx",
+    "Pandas",
+    "google-api-python-client",
+    "google-auth-httplib2",
+    "google-auth-oauthlib"
+  ],
+  "assignment_sources_archived": [
+    "ADSPA_Capstone.ipynb",
+    "ADSPA_Capstone.py",
+    "Assignment_1_2_ADSPA.ipynb",
+    "Assignment_1_2_ADSPA.py",
+    "Assignment_2_1_ADSPA_Concurrent.ipynb",
+    "Assignment_2_1_ADSPA_Concurrent.py",
+    "Assignment_2_2_ADSPA_Network.ipynb",
+    "Assignment_2_2_ADSPA_Network.py",
+    "Assignment_3_1_ADSPA_Negotiation.ipynb",
+    "Assignment_3_1_ADSPA_Negotiation.py",
+    "Assignment_3_2_ADSPA_Utility_Optimization.ipynb",
+    "Assignment_3_2_ADSPA_Utility_Optimization.py",
+    "Assignment_4_1_ADSPA_BDI.ipynb",
+    "Assignment_4_1_ADSPA_BDI.py",
+    "Assignment_4_2_ADSPA_Knowledge_API.ipynb",
+    "Assignment_4_2_ADSPA_Knowledge_API.py",
+    "Assignment_5_1_ADSPA_Authentication.ipynb",
+    "Assignment_5_1_ADSPA_Authentication.py"
+  ],
+  "features": [
+    "central academic dashboard with daily briefing",
+    "course, semester, coursework, and study material records",
+    "deadline countdowns, custom reminders, workload risk, and recovery plans",
+    "dependency-aware assignment lifecycle, checklist, and submission confirmation",
+    "availability-aware daily, weekly, and monthly planning with breaks and rescheduling",
+    "exam countdown, syllabus coverage, quiz results, weak-topic tracking, and spaced repetition",
+    "source-grounded material search, question extraction, summaries, flashcards, and practice questions",
+    "research projects, milestones, meetings, feedback, and experiment tracking",
+    "configurable workload optimization and academic natural-language commands",
+    "browser voice input and speech output",
+    "Google Calendar sync and opt-in Gmail reminders",
+    "persistent SQLite-backed scheduler, in-app, browser, and optional Telegram reminders",
+    "SQLite persistence with legacy JSON migration"
+  ]
+}

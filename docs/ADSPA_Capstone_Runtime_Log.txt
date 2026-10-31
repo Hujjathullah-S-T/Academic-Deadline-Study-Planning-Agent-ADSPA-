@@ -1,0 +1,79 @@
+[CORE] Core loop and worker started
+[CORE] Production cycle started
+[SECURITY] Trusted command accepted: {'task_added': {'title': 'Prepare capstone submission', 'status': 'pending'}}
+[SECURITY] BLOCKED_UNAUTHORIZED_REQUEST {"event": "BLOCKED_UNAUTHORIZED_REQUEST", "host_id": "unknown-host-evil", "reason": "Untrusted host"}
+[SECURITY] Malicious request safely blocked: Untrusted host
+[COOP] CFP sent to StudySupport-Agent-B: propose 90-minute focused session
+[COOP] Proposal received; coordinator_utility=0.77; partner_utility=0.745
+[COOP] Agreement accepted and committed by both simulated agents
+[API] Offline deterministic weather fixture selected
+[BDI] Beliefs updated; adopted intention=severe_weather_plan; mode library -> online
+[PLAN] {"intention": "severe_weather_plan", "reason": "Severe weather: avoid unnecessary travel.", "steps": ["Avoid travel", "Move study session online", "Notify study partner", "Review deadline queue"]}
+[WORKER] {"status": "processed", "task": {"status": "pending", "title": "Prepare capstone submission"}, "worker": "ADSPA-Worker"}
+[ACTION] Autonomously completed task: Prepare capstone submission
+
+=== ADSPA LIVE STATE DASHBOARD ===
+{
+  "active_intention": "severe_weather_plan",
+  "agent": "Academic Deadline & Study Planning Agent (ADSPA)",
+  "beliefs": {
+    "internet_available": true,
+    "pending_tasks": 0,
+    "precipitation_mm": 10,
+    "precipitation_probability": 90,
+    "temperature_c": 27,
+    "weather_code": 95,
+    "weather_condition": "severe",
+    "wind_kmh": 20
+  },
+  "cooperation_status": "AGREEMENT_REACHED",
+  "desires": [
+    {
+      "name": "meet_deadlines",
+      "priority": 10
+    },
+    {
+      "name": "study_safely",
+      "priority": 9
+    },
+    {
+      "name": "collaborate",
+      "priority": 6
+    }
+  ],
+  "last_action": "completed:Prepare capstone submission",
+  "runtime": "RUNNING",
+  "security_events_blocked": 1,
+  "study_mode": "online",
+  "tasks": [
+    {
+      "status": "completed",
+      "title": "Prepare capstone submission"
+    }
+  ],
+  "worker_results": 1
+}
+=== END DASHBOARD ===
+
+INTEGRATED_MODULES_VERIFIED=True
+AUTONOMOUS_TASK_COMPLETED=True
+COOPERATIVE_AGREEMENT_REACHED=True
+BDI_INTENTION_UPDATED=True
+SECURITY_BREACH_BLOCKED=True
+WORKER_PROCESSED_TASK=True
+ALL_CAPSTONE_ASSERTIONS_PASSED=True
+[CORE] Worker stopped cleanly
+
+STDERR:
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+PROCESS_EXIT_CODE=0

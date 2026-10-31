@@ -1,0 +1,80 @@
+ASSIGNMENT 3.1 — MULTI-AGENT COORDINATION PROTOCOL EXECUTION
+Agent family: Academic Deadline & Study Planning Agent (ADSPA)
+Protocol: Contract-net-inspired proposal/counter-proposal negotiation
+Execution: Successful local run
+
+TERMINAL TIMELINE
+=================
+============================================================================
+ADSPA MULTI-AGENT COORDINATION — CONTRACT-NET-INSPIRED NEGOTIATION
+Session ID: c0a4d748-71d5-4e0b-a680-5d42020cc5fa
+Agents: ADSPA-Agent-A (Coordinator) and ADSPA-Agent-B (Study Support Provider)
+============================================================================
+[Turn 1] ADSPA-Agent-A -> ADSPA-Agent-B | CALL_FOR_PROPOSAL
+  Coordinator requests 120 minutes of study support; budget ceiling is 75 credits.
+[Turn 2] ADSPA-Agent-B -> ADSPA-Agent-A | PROPOSAL
+  Provider proposes 90 minutes at 70.00 credits (provider utility=0.610).
+[Turn 3] ADSPA-Agent-A -> ADSPA-Agent-B | COUNTER_PROPOSAL
+  Coordinator counters with 120 minutes at 60.00 credits (coordinator utility=0.790).
+[Turn 4] ADSPA-Agent-B -> ADSPA-Agent-A | REVISED_PROPOSAL
+  Provider revises to 120 minutes at 72.00 credits (provider utility=0.564).
+[Turn 5] ADSPA-Agent-A -> ADSPA-Agent-B | ACCEPTANCE
+  Coordinator accepts revised proposal; coordinator utility=0.748, provider utility=0.564.
+[Turn 6] ADSPA-Agent-B -> ADSPA-Agent-A | COMMIT_ACK
+  Provider confirms commitment and echoes the session ID.
+[Turn 7] ADSPA-Agent-A -> ADSPA-Agent-B | CONSENSUS_CONFIRMED
+  Coordinator confirms the final agreement; both agents terminate negotiation.
+----------------------------------------------------------------------------
+CONSENSUS RESULT
+{
+  "session_id": "c0a4d748-71d5-4e0b-a680-5d42020cc5fa",
+  "status": "AGREED",
+  "task": "Help prepare an academic submission plan",
+  "allocated_minutes": 120,
+  "price_credits": 72.0,
+  "coordinator_utility": 0.7725,
+  "provider_utility": 0.564,
+  "handshake": [
+    "ACCEPTANCE",
+    "COMMIT_ACK",
+    "CONSENSUS_CONFIRMED"
+  ]
+}
+Final state: TERMINATED_AGREEMENT
+Messages exchanged: 7
+============================================================================
+Saved structured timeline to Assignment_3_1_Negotiation_Timeline.json
+
+
+NEGOTIATION SUMMARY
+===================
+- Two distinct agent instances ran: ADSPA-Agent-A (Coordinator) and ADSPA-Agent-B (Study Support Provider).
+- The coordinator issued a CALL_FOR_PROPOSAL.
+- The provider submitted a proposal, the coordinator countered, and the provider revised its offer.
+- Both agents' utility functions were evaluated before acceptance.
+- The final offer satisfies the provider's 0.55 minimum utility and the coordinator's 75-credit budget ceiling.
+- The agreement was finalized with ACCEPTANCE -> COMMIT_ACK -> CONSENSUS_CONFIRMED.
+- Negotiation terminated with state TERMINATED_AGREEMENT.
+- Final agreement: 120 minutes of support for 72.00 credits.
+- Coordinator utility at agreement: 0.7725
+- Provider utility at agreement: 0.5640
+- Total messages in the execution timeline: 7
+
+RUBRIC MAPPING
+==============
+1. Multi-Instance Setup Stability (1.5 marks):
+   - Two independent PlanningAgent objects with distinct IDs, roles, capacities, and utility thresholds.
+   - Each maintains its own sent/received message history and agreement state.
+2. Negotiation Protocol Implementation (2 marks):
+   - Contract-net-inspired call for proposal, initial proposal, counter-proposal, revised proposal, and utility-based acceptance.
+   - Messages are typed and include IDs, timestamps, sender/receiver, and payload.
+3. Consensus Handshake Termination (1.5 marks):
+   - Explicit ACCEPTANCE, COMMIT_ACK, and CONSENSUS_CONFIRMED sequence.
+   - Session ID echoed in handshake; final state recorded as TERMINATED_AGREEMENT.
+
+REPRODUCIBILITY
+===============
+Run:
+    python Assignment_3_1_ADSPA_Negotiation.py
+For detailed payloads:
+    python Assignment_3_1_ADSPA_Negotiation.py --verbose

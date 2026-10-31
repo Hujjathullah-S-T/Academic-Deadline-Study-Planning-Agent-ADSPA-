@@ -1,0 +1,5 @@
+PASS: security self-test
+PASS: add and complete task
+PASS: daily planner
+PASS: cooperation negotiation
+PASS: dashboard CLI

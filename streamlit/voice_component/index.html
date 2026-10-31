@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;font-family:system-ui,sans-serif;color:#263238">
+  <button id="voice" type="button" style="border:1px solid #78909c;border-radius:8px;background:white;padding:9px 14px;font-size:14px;cursor:pointer">🎙️ Speak</button>
+  <button id="speak-answer" type="button" style="border:1px solid #78909c;border-radius:8px;background:white;padding:9px 14px;font-size:14px;cursor:pointer;margin-left:6px" disabled>🔊 Read answer</button>
+  <span id="status" style="margin-left:10px;font-size:13px;color:#546e7a"></span>
+<script>
+(() => {
+  const ready = "streamlit:componentReady";
+  const render = "streamlit:render";
+  const setValue = "streamlit:setComponentValue";
+  const button = document.getElementById("voice");
+  const speakButton = document.getElementById("speak-answer");
+  const status = document.getElementById("status");
+  let language = navigator.language || "en-US";
+  let response = "";
+  function send(type, data = {}) {
+    window.parent.postMessage({isStreamlitMessage: true, type, ...data}, "*");
+  }
+  function setHeight() { send("streamlit:setFrameHeight", {height: 46}); }
+  window.addEventListener("message", event => {
+    if (event.data?.type === render) {
+      language = event.data.args?.language || language;
+      response = event.data.args?.response || "";
+      speakButton.disabled = !response || !("speechSynthesis" in window);
+      setHeight();
+    }
+  });
+  send(ready, {apiVersion: 1});
+  setHeight();
+  button.addEventListener("click", () => {
+    const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!Recognition) {
+      status.textContent = "Speech recognition is not supported in this browser.";
+      return;
+    }
+    const recognition = new Recognition();
+    recognition.lang = language;
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    button.disabled = true;
+    status.textContent = "Listening…";
+    recognition.onresult = event => {
+      const transcript = event.results?.[0]?.[0]?.transcript?.trim() || "";
+      if (transcript) send(setValue, {value: {transcript, nonce: Date.now()}});
+      status.textContent = transcript ? "Captured speech." : "No speech detected.";
+    };
+    recognition.onerror = event => { status.textContent = `Voice input error: ${event.error}`; };
+    recognition.onend = () => { button.disabled = false; };
+    recognition.start();
+  });
+  speakButton.addEventListener("click", () => {
+    if (!response || !("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(response);
+    utterance.lang = language;
+    window.speechSynthesis.speak(utterance);
+  });
+})();
+</script>
+</body>
+</html>

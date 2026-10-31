@@ -1,0 +1,39 @@
+========================================================================
+ASSIGNMENT 1.2: RULE-BASED ENVIRONMENTAL REASONER
+Agent: Academic Deadline & Study Planning Agent (ADSPA)
+========================================================================
+
+Mock telemetry stream started: 5 observations received.
+
+--- Incoming telemetry 1/5 ---
+
+PERCEPT: task='AI Assignment', deadline_in=18h, completed=False, available_study_hours=3h, estimated_study_hours=5h
+[2026-10-24 17:43:33] ACTION for 'AI Assignment': URGENT ALERT: prioritize this task because its deadline is within 24 hours.
+[2026-10-24 17:43:33] ACTION for 'AI Assignment': RESCHEDULE: available study time is below the estimated time required.
+
+--- Incoming telemetry 2/5 ---
+
+PERCEPT: task='Database Lab Report', deadline_in=6h, completed=False, available_study_hours=4h, estimated_study_hours=2h
+[2026-10-24 17:43:33] ACTION for 'Database Lab Report': URGENT ALERT: prioritize this task because its deadline is within 24 hours.
+[2026-10-24 17:43:33] ACTION for 'Database Lab Report': NEXT STEP: begin the task now and check progress after the study block.
+
+--- Incoming telemetry 3/5 ---
+
+PERCEPT: task='NLP Quiz Preparation', deadline_in=48h, completed=False, available_study_hours=5h, estimated_study_hours=3h
+[2026-10-24 17:43:33] ACTION for 'NLP Quiz Preparation': PLAN AHEAD: add a study block before the deadline.
+
+--- Incoming telemetry 4/5 ---
+
+PERCEPT: task='Python Practical', deadline_in=-3h, completed=False, available_study_hours=2h, estimated_study_hours=2h
+[2026-10-24 17:43:33] ACTION for 'Python Practical': FLAG OVERDUE: notify the student and review the recovery plan.
+
+--- Incoming telemetry 5/5 ---
+
+PERCEPT: task='Data Mining Notes', deadline_in=12h, completed=True, available_study_hours=0h, estimated_study_hours=2h
+[2026-10-24 17:43:33] ACTION for 'Data Mining Notes': Mark task as completed; no reminder needed.
+
+========================================================================
+RUN COMPLETE: 5 observations processed.
+Reactive actions logged: 7
+Execution log contains each condition-action response shown above.
+========================================================================

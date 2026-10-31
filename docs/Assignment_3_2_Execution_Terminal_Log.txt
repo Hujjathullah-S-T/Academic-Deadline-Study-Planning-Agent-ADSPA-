@@ -1,0 +1,73 @@
+ASSIGNMENT 3.2 — SELF-INTERESTED AGENT UTILITY OPTIMIZATION
+Agent: Academic Deadline & Study Planning Agent (ADSPA)
+Execution: Successful local run
+
+TERMINAL OUTPUT
+================
+========================================================================================
+ASSIGNMENT 3.2 — SELF-INTERESTED AGENT UTILITY OPTIMIZATION
+Agent: Academic Deadline & Study Planning Agent (ADSPA)
+Constraints: budget <= 100.00, delivery <= 5 days, quality >= 6.0, study_value >= 6.0, stock >= 1
+========================================================================================
+ID    Offer                              Total   Utility   Feasible
+----------------------------------------------------------------------------------------
+O01   Focus Desk Lamp                    31.00    6.7600       True
+O02   Premium Study Bundle               80.00    6.2800       True
+O03   Budget Notebook Pack               16.00    5.7700       True
+O04   Ergonomic Study Kit                58.00    6.5000       True
+O05   Wireless Keyboard                  39.00  REJECTED      False
+O06   Basic Reading Light                20.00  REJECTED      False
+O07   Noise-Cancelling Headphones        93.00    5.0300       True
+O08   Study Planner Set                  24.00    6.8400       True
+O09   Refurbished Tablet                103.00  REJECTED      False
+O10   Exam Essentials Bundle             63.00    6.1200       True
+----------------------------------------------------------------------------------------
+OPTIMAL FEASIBLE CHOICE
+  Offer: O08 — Study Planner Set
+  Total price: 24.00
+  Utility: 6.8400
+  Feasible candidates: 7 / 10
+  Search: exhaustive argmax over all feasible offers
+
+CONSTRAINT BOUNDARY TESTS
+  Tests run: 5
+  All invalid/infeasible offers rejected: True
+  X01: feasible=False | total price 101.00 exceeds budget 100.00
+  X02: feasible=False | quality must be in [0, 10]
+  X03: feasible=False | out of stock
+  X04: feasible=False | delivery exceeds 5 days
+  X05: feasible=False | price must be finite and non-negative
+========================================================================================
+Saved machine-readable results to Assignment_3_2_Optimization_Results.json
+
+
+UTILITY EQUATION
+================
+U(o) = 0.30Q + 0.20D + 0.20C + 0.30S - 0.04P_total
+
+Where:
+- Q = quality score from 0 to 10
+- D = delivery score = clip(10 * (1 - delivery_days/10), 0, 10)
+- C = convenience score from 0 to 10
+- S = study value score from 0 to 10
+- P_total = item price + shipping fee
+
+HARD CONSTRAINTS
+================
+- Total cost (item price + shipping) <= 100 credits
+- Delivery <= 5 days
+- Quality >= 6
+- Study value >= 6
+- In stock (stock >= 1)
+- Scores must be within valid numeric ranges
+
+RUBRIC MAPPING
+==============
+1. Utility Evaluation Equation Logic (2 marks):
+   - Explicit weighted mathematical utility function with a price penalty.
+2. Optimization Search Algorithm (2 marks):
+   - Scores 10 candidates, filters infeasible offers, and performs exhaustive argmax across all feasible offers.
+   - Deterministic tie-break by offer ID.
+3. Error / Constraint Boundary Resilience (1 mark):
+   - Rejects over-budget, out-of-range, negative-price, slow-delivery, and out-of-stock offers.
+   - If no feasible offer exists, abstains instead of violating constraints.

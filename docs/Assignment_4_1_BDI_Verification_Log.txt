@@ -1,0 +1,57 @@
+=== ADSPA BDI Verification Run ===
+[PLAN_RECALCULATED] {"plan_name": "library_study_plan", "rationale": "Library access is available and the estimated work fits the deadline.", "reason": "initialization", "selected_goal": "finish_assignment", "steps": ["Open the assignment brief and rubric", "Reserve a focused library study block", "Complete the required work", "Check the rubric and submit"]}
+[INTENTION_ADOPTED] {"goal_id": "finish_assignment", "intention_id": "INT-001", "next_action": "Open the assignment brief and rubric", "plan_name": "library_study_plan"}
+INITIAL_PLAN=library_study_plan
+[STEP_EXECUTED] {"action": "Open the assignment brief and rubric", "intention_id": "INT-001", "next_action": "Reserve a focused library study block", "still_active": true}
+
+--- Unexpected environmental update: library becomes unavailable ---
+[BELIEF_UPDATE] {"key": "library_available", "new_value": false, "old_value": true, "source": "unexpected_environment_event"}
+[INTENTION_SUSPENDED] {"intention_id": "INT-001", "old_plan": "library_study_plan", "reason": "belief changed: library_available"}
+[PLAN_RECALCULATED] {"plan_name": "online_study_plan", "rationale": "Library is unavailable, so the plan uses online materials.", "reason": "belief changed: library_available", "selected_goal": "finish_assignment", "steps": ["Open course materials and the assignment rubric online", "Create a focused work session", "Complete the required work", "Check the rubric and submit"]}
+[INTENTION_ADOPTED] {"goal_id": "finish_assignment", "intention_id": "INT-002", "next_action": "Open course materials and the assignment rubric online", "plan_name": "online_study_plan"}
+SHIFTED_PLAN=online_study_plan
+INTENTION_SHIFT_VERIFIED=True
+
+--- Second update: internet also becomes unavailable ---
+[BELIEF_UPDATE] {"key": "internet_available", "new_value": false, "old_value": true, "source": "unexpected_environment_event"}
+[INTENTION_SUSPENDED] {"intention_id": "INT-002", "old_plan": "online_study_plan", "reason": "belief changed: internet_available"}
+[PLAN_RECALCULATED] {"plan_name": "offline_recovery_plan", "rationale": "Neither library nor internet is available; switch to an offline recovery plan.", "reason": "belief changed: internet_available", "selected_goal": "secure_study_resources", "steps": ["Locate downloaded course notes and assignment files", "Use offline materials to continue the assignment", "Contact the course instructor if required information is missing"]}
+[INTENTION_ADOPTED] {"goal_id": "secure_study_resources", "intention_id": "INT-003", "next_action": "Locate downloaded course notes and assignment files", "plan_name": "offline_recovery_plan"}
+OFFLINE_PLAN=offline_recovery_plan
+
+--- Deadline becomes shorter than estimated work ---
+[BELIEF_UPDATE] {"key": "deadline_hours", "new_value": 2, "old_value": 8, "source": "deadline_change"}
+[INTENTION_SUSPENDED] {"intention_id": "INT-003", "old_plan": "offline_recovery_plan", "reason": "belief changed: deadline_hours"}
+[PLAN_RECALCULATED] {"plan_name": "resource_recovery", "rationale": "Time is short and both library and internet access are unavailable.", "reason": "belief changed: deadline_hours", "selected_goal": "secure_study_resources", "steps": ["Find an offline copy of the assignment instructions", "Use locally available notes and materials", "Notify the student that external study resources are unavailable"]}
+[INTENTION_ADOPTED] {"goal_id": "secure_study_resources", "intention_id": "INT-004", "next_action": "Find an offline copy of the assignment instructions", "plan_name": "resource_recovery"}
+TRIAGE_PLAN=resource_recovery
+
+--- Assignment is marked completed ---
+[BELIEF_UPDATE] {"key": "assignment_completed", "new_value": true, "old_value": false, "source": "student_confirmation"}
+[INTENTION_SUSPENDED] {"intention_id": "INT-004", "old_plan": "resource_recovery", "reason": "belief changed: assignment_completed"}
+[PLAN_RECALCULATED] {"plan_name": "completion_verified", "rationale": "The assignment is already marked complete.", "reason": "belief changed: assignment_completed", "selected_goal": "finish_assignment", "steps": ["Verify submission receipt"]}
+[INTENTION_ADOPTED] {"goal_id": "finish_assignment", "intention_id": "INT-005", "next_action": "Verify submission receipt", "plan_name": "completion_verified"}
+FINAL_PLAN=completion_verified
+
+=== VERIFICATION SUMMARY ===
+Initial plan: library_study_plan
+After library outage: online_study_plan
+After internet outage: offline_recovery_plan
+After deadline change: resource_recovery
+After completion update: completion_verified
+Belief records: 5
+Desire records: 3
+Intentions created: 5
+ALL_ASSERTIONS_PASSED=True
+
+STDERR:
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.

@@ -1,0 +1,41 @@
+ADSPA CAPSTONE — 3-MINUTE VIDEO PRESENTATION SCRIPT
+====================================================
+Record a screen video with voice-over; target 2:45–3:00. This text is a script/storyboard, not a rendered video file.
+
+0:00–0:20 | Introduction
+ON SCREEN: Package title / README.
+SAY: “This is Assignment 5.2, the Academic Deadline & Study Planning Agent, ADSPA. It consolidates the core loop, worker queue, cooperation, knowledge and BDI planning, and security checks into one executable workflow.”
+
+0:20–0:45 | Architecture
+ON SCREEN: ADSPA_Capstone_Architecture.png.
+SAY: “The coordinator routes events. The security gate authenticates incoming commands. A worker processes tasks asynchronously. The cooperation layer evaluates a peer proposal, while weather knowledge updates beliefs and helps the BDI planner select an intention.”
+
+0:45–1:10 | Run the cycle
+ON SCREEN: Terminal command `python ADSPA_Capstone.py`.
+SAY: “The default demonstration is deterministic and works offline. A trusted controller sends a signed task-add command. The security gate checks host identity, HMAC, timestamp, nonce, schema, and the command allowlist before processing.”
+
+1:10–1:35 | Security breach
+ON SCREEN: `BLOCKED_UNAUTHORIZED_REQUEST`.
+SAY: “An unknown host attempts to change the study mode. The request is blocked before execution and recorded as a security event. The agent's state remains unchanged by the rejected command.”
+
+1:35–2:00 | Worker and cooperation
+ON SCREEN: `[WORKER]` and `[COOP]` lines.
+SAY: “The worker thread processes the task independently. The coordinator also sends a call for proposal to a simulated study-support peer, calculates utilities, and commits an agreement when both thresholds are met.”
+
+2:00–2:25 | BDI adaptation and dashboard
+ON SCREEN: `[BDI]`, `[PLAN]`, and dashboard.
+SAY: “A severe-weather fixture updates the agent's beliefs. The previous intention is suspended and a severe-weather plan is adopted, switching study mode to online to avoid unnecessary travel. The CLI dashboard displays tasks, beliefs, desires, intention, cooperation status, worker results, and security events.”
+
+2:25–2:50 | Final assertions
+ON SCREEN: final assertion lines.
+SAY: “The final assertions verify module integration, autonomous task completion, cooperation, intention updates, breach rejection, and worker processing.”
+
+2:50–3:00 | Close
+SAY: “This is a complete integrated capstone demonstration. For real deployment, key management, transport security, persistent storage, and monitoring must be hardened.”
+
+Recording checklist:
+1. Open the architecture schematic.
+2. Run `python ADSPA_Capstone.py` in the package directory.
+3. Show the security block, worker output, cooperation agreement, dashboard, and final assertions.
+4. Export your screen recording as MP4.
+5. Do not claim live API success unless running `--live-weather` prints `LIVE_API_FETCH_SUCCEEDED=True`.

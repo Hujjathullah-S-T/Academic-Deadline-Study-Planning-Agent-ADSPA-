@@ -1,0 +1,27 @@
+============================================================================
+ASSIGNMENT 2.1: CONCURRENT TASK DAEMONIZATION USING THREADS AND WORKERS
+Agent: Academic Deadline & Study Planning Agent (ADSPA)
+============================================================================
+[17:51:08.166] MAIN: application is responsive; daemon monitor started.
+[17:51:08.176] MAIN: cycle=1 task='AI Assignment' -> URGENT ALERT + RESCHEDULE | queue=0.215 ms, process=0.005 ms
+[17:51:08.176] MAIN: cycle=1 task='Database Lab Report' -> URGENT ALERT + START NOW | queue=0.336 ms, process=0.002 ms
+[17:51:08.176] MAIN: cycle=1 task='NLP Quiz Preparation' -> PLAN AHEAD | queue=0.349 ms, process=0.001 ms
+[17:51:08.176] MAIN: cycle=1 task='Python Practical' -> FLAG OVERDUE | queue=0.370 ms, process=0.001 ms
+[17:51:08.176] MAIN: cycle=1 task='Data Mining Notes' -> MARK COMPLETED | queue=0.383 ms, process=0.000 ms
+[17:51:08.688] MAIN: cycle=2 task='AI Assignment' -> URGENT ALERT + RESCHEDULE | queue=0.364 ms, process=0.120 ms
+[17:51:08.689] MAIN: cycle=2 task='Database Lab Report' -> URGENT ALERT + START NOW | queue=0.803 ms, process=0.002 ms
+[17:51:08.689] MAIN: cycle=2 task='NLP Quiz Preparation' -> PLAN AHEAD | queue=0.973 ms, process=0.001 ms
+[17:51:08.689] MAIN: cycle=2 task='Python Practical' -> FLAG OVERDUE | queue=1.089 ms, process=0.001 ms
+[17:51:08.689] MAIN: cycle=2 task='Data Mining Notes' -> MARK COMPLETED | queue=1.048 ms, process=0.001 ms
+
+----------------------------------------------------------------------------
+PERFORMANCE SUMMARY
+Telemetry events processed: 10
+Distinct tasks tracked: 5
+Average queue latency: 0.593 ms
+Average rule-processing latency: 0.013 ms
+Average polling latency: 10.241 ms
+Total elapsed time: 524.582 ms
+Monitor thread stopped cleanly: True
+Thread safety: queue.Queue transfers events; Lock protects shared state/log.
+============================================================================

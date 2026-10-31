@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Academic Planner: Dashboard",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "-m",
+        "streamlit",
+        "run",
+        "streamlit/streamlit_app.py"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Academic Planner: Daily Study Plan",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "src/agent.py",
+        "plan"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Academic Planner: Reminder Service",
+      "type": "shell",
+      "command": "python",
+      "args": ["src/agent.py", "reminder-service"],
+      "problemMatcher": []
+    },
+    {
+      "label": "ADSPA: Run Tests",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

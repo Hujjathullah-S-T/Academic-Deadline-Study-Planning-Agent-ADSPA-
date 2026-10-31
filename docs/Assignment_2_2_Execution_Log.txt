@@ -1,0 +1,115 @@
+Assignment 2.2 — Distributed Agent Messaging using Sockets
+Agent: Academic Deadline & Study Planning Agent (ADSPA)
+Protocol: ADSPA/1.0 over TCP; UTF-8 JSON, one message per newline.
+Host/port for local demo: 127.0.0.1:50525
+
+Execution mode: one-process local loopback demonstration.
+For the required dual-terminal demonstration, follow README instructions:
+  Terminal 1: python Assignment_2_2_ADSPA_Network.py server
+  Terminal 2: python Assignment_2_2_ADSPA_Network.py client
+
+Observed demo output:
+ADSPA Agent-A connecting to 127.0.0.1:50525 ...
+[2026-10-24T18:10:06.575+00:00] ('127.0.0.1', 38100) | received=STATE_TRANSFER | reply=STATE_ACK | processing_ms=0.270
+
+[Agent-A] STATE_TRANSFER acknowledgement:
+{
+  "protocol": "ADSPA/1.0",
+  "message_id": "caa6bc2e-443c-4d94-a15a-9d9b2be4bda3",
+  "message_type": "STATE_ACK",
+  "sender": "ADSPA-Agent-B",
+  "timestamp": "2026-10-24T18:10:06.575+00:00",
+  "reply_to": "9bc67fc8-2b8b-4d9c-b2b3-287ea800c3ca",
+  "payload": {
+    "status": "accepted",
+    "received_agent_id": "ADSPA-Agent-A",
+    "task_count": 4,
+    "received_parameters": {
+      "urgent_threshold_hours": 24,
+      "poll_interval_seconds": 0.5
+    }
+  }
+}
+[2026-10-24T18:10:06.577+00:00] ('127.0.0.1', 38100) | received=INSTRUCTION | reply=INSTRUCTION_RESULT | processing_ms=0.128
+
+[Agent-A] Autonomous response to remote instruction:
+{
+  "protocol": "ADSPA/1.0",
+  "message_id": "8142dc68-84c3-41f9-91b0-4a7ee3ba341d",
+  "message_type": "INSTRUCTION_RESULT",
+  "sender": "ADSPA-Agent-B",
+  "timestamp": "2026-10-24T18:10:06.576+00:00",
+  "reply_to": "9e77efed-eeff-4ca3-93bb-420ace3fdd7f",
+  "payload": {
+    "status": "completed",
+    "command": "evaluate_tasks",
+    "evaluated_count": 4,
+    "results": [
+      {
+        "task_id": "T101",
+        "action": "URGENT_ALERT",
+        "reason": "Deadline is within urgent threshold"
+      },
+      {
+        "task_id": "T102",
+        "action": "PLAN_AHEAD",
+        "reason": "Deadline is beyond urgent threshold"
+      },
+      {
+        "task_id": "T103",
+        "action": "FLAG_OVERDUE",
+        "reason": "Deadline has passed"
+      },
+      {
+        "task_id": "T104",
+        "action": "NO_ACTION",
+        "reason": "Task already completed"
+      }
+    ]
+  }
+}
+[2026-10-24T18:10:06.578+00:00] ('127.0.0.1', 38100) | received=PING | reply=PONG | processing_ms=0.352
+
+[Agent-A] Network health check:
+{
+  "protocol": "ADSPA/1.0",
+  "message_id": "e2821e18-e312-46bd-ae7f-d4892a9b6c75",
+  "message_type": "PONG",
+  "sender": "ADSPA-Agent-B",
+  "timestamp": "2026-10-24T18:10:06.577+00:00",
+  "reply_to": "d4fb6f38-51a2-4e17-989e-1f53f4e4e8d9",
+  "payload": {
+    "status": "ok",
+    "agent_id": "ADSPA-Agent-B"
+  }
+}
+
+[STDERR]
+Spreadsheet runtime warmup failed during python startup
+Traceback (most recent call last):
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py", line 26, in warm_spreadsheet_runtime_on_startup
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 785, in warm_spreadsheet_runtime
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 718, in _warm_feature_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/spreadsheet_warmup.py", line 509, in _warm_drawing_and_image_flows
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/generated/interface/models.py", line 32861, in bring_to_front
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/remote.py", line 764, in __call__
+  File "/tmp/tmp.QlpUkOUI9D/artifact_tool_v2-2.8.66/artifact_tool/rpc/client.py", line 175, in call
+artifact_tool.rpc.client.RemoteError: Element ordering requires an owning element collection.
+
+
+Design / rubric checklist:
+1. Network socket stability:
+   - TCP listener binds to localhost and accepts connections.
+   - Client uses a connection timeout; sockets use read timeouts.
+   - New client connections are handled in daemon worker threads.
+2. Serialization and transport:
+   - Typed messages are serialized as UTF-8 JSON.
+   - Newline framing separates messages on a persistent TCP stream.
+   - Every message carries protocol, UUID message ID, type, sender, timestamp, reply_to, and object payload.
+3. Proactive remote message handling:
+   - Agent-B acknowledges STATE_TRANSFER and reads active parameters.
+   - Agent-B parses INSTRUCTION messages and autonomously evaluates task rules.
+   - PING receives PONG; unknown instructions return a typed ERROR.
+4. Thread safety:
+   - A lock protects server log output; connection handlers own their socket streams.
+   - This assignment builds on the previous ADSPA rules and thread-based work.

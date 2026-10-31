@@ -1,0 +1,22 @@
+=== ADSPA Assignment 5.1: Authentication + Host Integrity ===
+Trusted hosts: ['adspa-controller-01']
+Allowed commands: ['ADD_STUDY_TASK', 'GET_STATUS', 'SET_STUDY_MODE']
+[SECURITY] ACCEPTED_TRUSTED_REQUEST {"command": "SET_STUDY_MODE", "host_id": "adspa-controller-01", "result": {"study_mode": "online"}}
+[SECURITY] BLOCKED_UNAUTHORIZED_REQUEST {"event": "BLOCKED_UNAUTHORIZED_REQUEST", "host_id": "adspa-controller-01", "reason": "Invalid HMAC signature; payload may be modified"}
+[TEST] Tampered payload rejected as expected.
+[SECURITY] BLOCKED_UNAUTHORIZED_REQUEST {"event": "BLOCKED_UNAUTHORIZED_REQUEST", "host_id": "attacker-host-99", "reason": "Untrusted or unknown host"}
+[TEST] Untrusted host rejected as expected.
+[SECURITY] BLOCKED_UNAUTHORIZED_REQUEST {"event": "BLOCKED_UNAUTHORIZED_REQUEST", "host_id": "adspa-controller-01", "reason": "Command not allowlisted"}
+[TEST] Non-allowlisted command rejected as expected.
+[SECURITY] BLOCKED_UNAUTHORIZED_REQUEST {"event": "BLOCKED_UNAUTHORIZED_REQUEST", "host_id": "adspa-controller-01", "reason": "Replay detected: nonce already used"}
+[TEST] Replayed request rejected as expected.
+Final study mode: online
+Blocked unauthorized events: 4
+TAMPERED_PAYLOAD_BLOCKED=True
+UNTRUSTED_HOST_BLOCKED=True
+DISALLOWED_COMMAND_BLOCKED=True
+REPLAY_BLOCKED=True
+REJECTED_REQUESTS_DID_NOT_CHANGE_STATE=True
+ALL_SECURITY_ASSERTIONS_PASSED=True
+
+PROCESS_EXIT_CODE=0

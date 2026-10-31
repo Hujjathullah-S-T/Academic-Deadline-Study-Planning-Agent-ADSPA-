@@ -1,0 +1,47 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;font:14px system-ui,sans-serif">
+  <button id="enable" style="padding:8px 12px;border:1px solid #78909c;border-radius:8px;background:#fff;cursor:pointer">Enable desktop notifications</button>
+  <span id="status" style="margin-left:8px;color:#546e7a"></span>
+<script>
+(() => {
+  const key = "academic-planner-notification-ids";
+  const button = document.getElementById("enable");
+  const status = document.getElementById("status");
+  let items = [];
+  function send(type, data = {}) {
+    window.parent.postMessage({isStreamlitMessage:true,type,...data}, "*");
+  }
+  function notifyNew() {
+    if (!("Notification" in window) || Notification.permission !== "granted") return;
+    let seen = [];
+    try { seen = JSON.parse(localStorage.getItem(key) || "[]"); } catch (_) {}
+    const current = items.map(item => String(item.id));
+    for (const item of items) {
+      if (!seen.includes(String(item.id))) {
+        new Notification(item.title || "Academic reminder", {body:item.message || "A study reminder is ready."});
+      }
+    }
+    localStorage.setItem(key, JSON.stringify(current.slice(-200)));
+  }
+  window.addEventListener("message", event => {
+    if (event.data?.type === "streamlit:render") {
+      items = event.data.args?.notifications || [];
+      notifyNew();
+      send("streamlit:setFrameHeight", {height:44});
+      status.textContent = ("Notification" in window)
+        ? (Notification.permission === "granted" ? "Desktop alerts enabled." : "Browser permission is required.")
+        : "This browser does not support desktop notifications.";
+    }
+  });
+  button.addEventListener("click", async () => {
+    if (!("Notification" in window)) { status.textContent = "Not supported by this browser."; return; }
+    const permission = await Notification.requestPermission();
+    status.textContent = permission === "granted" ? "Desktop alerts enabled." : "Permission not granted.";
+    notifyNew();
+  });
+  send("streamlit:componentReady", {apiVersion:1});
+  send("streamlit:setFrameHeight", {height:44});
+})();
+</script>
+</body></html>
